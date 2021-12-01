@@ -40,10 +40,8 @@ fn count_depths_2(depths: &Vec<i32>) {
 
     for window in depths[..].windows(3) {
         let sum: i32 = window.iter().sum();
-        if last > 0 {
-            if sum > last {
-                incs += 1;
-            }
+        if last > 0 && sum > last {
+            incs += 1;
         }
 
         last = sum;
