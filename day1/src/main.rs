@@ -7,11 +7,11 @@ fn main() {
 
     println!("Reading from: {}", filename);
 
-    let contents = fs::read_to_string(filename).expect("Something went wrong reading the file");
+    let contents = fs::read_to_string(filename).expect("Could not read data file");
 
     let depths: Vec<i32> = contents
         .split("\n")
-        .map(|d_str| d_str.parse().unwrap())
+        .map(|d_str| d_str.parse().expect("File contained a non-integer value!"))
         .collect();
 
     count_depths_1(&depths);
