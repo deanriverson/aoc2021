@@ -6,14 +6,12 @@ fn main() {
 
     let filename = self::parse_config(&args);
 
-    println!("In file {}", filename);
+    println!("Reading from: {}", filename);
 
     let contents = fs::read_to_string(filename).expect("Something went wrong reading the file");
 
-    let depths: Vec<i32> = contents
+    let depths = contents
         .split("\n")
-        .collect::<Vec<&str>>()
-        .iter()
         .map(|d_str| d_str.parse::<i32>().unwrap())
         .collect();
 
@@ -34,7 +32,7 @@ fn count_depths_1(depths: &Vec<i32>) {
         }
     }
 
-    println!("window size 2 increases: {}", incs);
+    println!("Part 1 increases: {}", incs);
 }
 
 fn count_depths_2(depths: &Vec<i32>) {
@@ -52,5 +50,5 @@ fn count_depths_2(depths: &Vec<i32>) {
         last = sum;
     }
 
-    println!("window size 3 increases: {}", incs);
+    println!("Part 2 increases: {}", incs);
 }
