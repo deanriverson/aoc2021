@@ -3,8 +3,7 @@ use std::fs;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-
-    let filename = self::parse_config(&args);
+    let filename = parse_config(&args);
 
     println!("Reading from: {}", filename);
 
