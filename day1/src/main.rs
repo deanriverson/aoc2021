@@ -9,9 +9,9 @@ fn main() {
 
     let contents = fs::read_to_string(filename).expect("Something went wrong reading the file");
 
-    let depths = contents
+    let depths: Vec<i32> = contents
         .split("\n")
-        .map(|d_str| d_str.parse::<i32>().unwrap())
+        .map(|d_str| d_str.parse().unwrap())
         .collect();
 
     count_depths_1(&depths);
