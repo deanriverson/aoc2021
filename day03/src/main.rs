@@ -71,7 +71,7 @@ fn find_life_support(lines: &Vec<&str>, is_oxy: bool) -> u32 {
         };
 
         if lines.len() == 1 {
-            return parse_bin_str(lines[0]);
+            return parse_binary_str(lines[0]);
         }
     }
 
@@ -98,6 +98,6 @@ fn parse_config(args: &[String]) -> &str {
     &args[1]
 }
 
-fn parse_bin_str(s: &str) -> u32 {
-    isize::from_str_radix(s, 2).unwrap() as u32
+fn parse_binary_str(s: &str) -> u32 {
+    u32::from_str_radix(s, 2).expect("Line was not a binary number!")
 }
