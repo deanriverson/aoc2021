@@ -65,9 +65,9 @@ fn find_life_support(lines: &Vec<&str>, is_oxy: bool) -> u32 {
         });
 
         lines = if is_oxy {
-            select_gt(&res.0, &res.1)
+            select_gt(res.0, res.1)
         } else {
-            select_lte(&res.0, &res.1)
+            select_lte(res.0, res.1)
         };
 
         if lines.len() == 1 {
@@ -78,19 +78,19 @@ fn find_life_support(lines: &Vec<&str>, is_oxy: bool) -> u32 {
     return 0;
 }
 
-fn select_gt<'a, 'b>(fst: &'a Vec<&'b str>, snd: &'a Vec<&'b str>) -> Vec<&'b str> {
+fn select_gt<'a>(fst: Vec<&'a str>, snd: Vec<&'a str>) -> Vec<&'a str> {
     if fst.len() > snd.len() {
-        fst.clone()
+        fst
     } else {
-        snd.clone()
+        snd
     }
 }
 
-fn select_lte<'a, 'b>(fst: &'a Vec<&'b str>, snd: &'a Vec<&'b str>) -> Vec<&'b str> {
+fn select_lte<'a>(fst: Vec<&'a str>, snd: Vec<&'a str>) -> Vec<&'a str> {
     if fst.len() <= snd.len() {
-        fst.clone()
+        fst
     } else {
-        snd.clone()
+        snd
     }
 }
 
