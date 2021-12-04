@@ -7,13 +7,18 @@ fn main() {
     println!("Reading from: {}", filename);
 
     let contents = fs::read_to_string(filename).expect("Could not read data file");
-    let lines: Vec<&str> = contents.split("\n").collect();
+    let lines: Vec<&[u8]> = contents.split("\n").map(|s| s.as_bytes()).collect();
+
+    // let ls = vec![
+    //     "1010101".as_bytes(),
+    //     "0101010".as_bytes()
+    // ];
 
     calc_solution_1(&lines);
     calc_solution_2(&lines);
 }
 
-fn calc_solution_1(lines: &Vec<&str>) {
+fn calc_solution_1(lines: &Vec<&[u8]>) {
     let mut gamma = 0u32;
     let mut epsilon = 0u32;
 
@@ -24,7 +29,7 @@ fn calc_solution_1(lines: &Vec<&str>) {
         let mut one_count = 0;
 
         for line in lines {
-            if line.as_bytes()[i] == ('1' as u8) {
+            if line[i] == b'1' {
                 one_count += 1;
             }
         }
@@ -42,21 +47,21 @@ fn calc_solution_1(lines: &Vec<&str>) {
     println!("Part 1 answer: {}", gamma * epsilon);
 }
 
-fn calc_solution_2(lines: &Vec<&str>) {
+fn calc_solution_2(lines: &Vec<&[u8]>) {
     let oxy = find_life_support(lines, true);
     let co2 = find_life_support(lines, false);
     println!("Part 2 answer: {}", oxy * co2);
 }
 
-fn find_life_support(lines: &Vec<&str>, is_oxy: bool) -> u32 {
+fn find_life_support(lines: &Vec<&[u8]>, is_oxy: bool) -> u32 {
     let line_len = lines[0].len();
     let mut lines = lines.clone();
 
     for i in 0..line_len {
-        let init: (Vec<&str>, Vec<&str>) = (Vec::new(), Vec::new());
+        let init: (Vec<&[u8]>, Vec<&[u8]>) = (Vec::new(), Vec::new());
 
         let res = lines.iter().fold(init, |mut acc, line| {
-            if line.as_bytes()[i] == ('1' as u8) {
+            if line[i] == b'1' {
                 acc.1.push(line);
             } else {
                 acc.0.push(line);
@@ -71,14 +76,14 @@ fn find_life_support(lines: &Vec<&str>, is_oxy: bool) -> u32 {
         };
 
         if lines.len() == 1 {
-            return parse_binary_str(lines[0]);
+            return parse_binary_str(str::from_utf8(lines[0]).unwrap());
         }
     }
 
     return 0;
 }
 
-fn select_gt<'a>(fst: Vec<&'a str>, snd: Vec<&'a str>) -> Vec<&'a str> {
+fn select_gt<'a>(fst: Vec<&'a [u8]>, snd: Vec<&'a [u8]>) -> Vec<&'a [u8]> {
     if fst.len() > snd.len() {
         fst
     } else {
@@ -86,7 +91,7 @@ fn select_gt<'a>(fst: Vec<&'a str>, snd: Vec<&'a str>) -> Vec<&'a str> {
     }
 }
 
-fn select_lte<'a>(fst: Vec<&'a str>, snd: Vec<&'a str>) -> Vec<&'a str> {
+fn select_lte<'a>(fst: Vec<&'a [u8]>, snd: Vec<&'a [u8]>) -> Vec<&'a [u8]> {
     if fst.len() <= snd.len() {
         fst
     } else {
