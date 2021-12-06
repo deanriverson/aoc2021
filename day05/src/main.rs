@@ -45,18 +45,20 @@ fn parse_points(lines: &str, include_diagonals: bool) -> PointMap {
     let re = Regex::new(r"(\d+),(\d+) -> (\d+),(\d+)").unwrap();
 
     re.captures_iter(lines)
-        .map(|cap| {
-            Span(
-                Point(to_i32(&cap[1]), to_i32(&cap[2])),
-                Point(to_i32(&cap[3]), to_i32(&cap[4])),
-            )
-        })
+        .map(build_span)
         .filter(|s| include_diagonals || !is_diagonal(&s))
         .fold(PointMap::new(), add_span)
 }
 
 fn to_i32(s: &str) -> i32 {
     s.parse().unwrap()
+}
+
+fn build_span(cap: regex::Captures) -> Span {
+    Span(
+        Point(to_i32(&cap[1]), to_i32(&cap[2])),
+        Point(to_i32(&cap[3]), to_i32(&cap[4])),
+    )
 }
 
 fn add_span(mut map: PointMap, span: Span) -> PointMap {
