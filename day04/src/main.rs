@@ -131,6 +131,7 @@ fn parse_config(args: &[String]) -> &str {
     &args[1]
 }
 
+/*
 use std::cell::Cell;
 
 /// Here I'm just playing with the idea of creating an object that owns
@@ -166,3 +167,4 @@ impl<'a> BoardRef<'a> {
         self.selected.set(&self.squares[0]);
     }
 }
+*/
