@@ -62,7 +62,7 @@ fn cost(xs: &Vec<i64>, y: i64) -> i64 {
 fn cost_2(xs: &Vec<i64>, y: i64) -> i64 {
     xs.iter().fold(0, |acc, x| {
         let delta = (x - y).abs();
-        let sum = (1..=delta).sum::<i64>();
+        let sum = (delta + 1) * delta / 2;
         acc + sum
     })
 }
